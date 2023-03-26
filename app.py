@@ -1,11 +1,19 @@
 from flask import Flask, jsonify, request
 import mysql.connector
 from database.Database import config
+import sys
 
 
 app = Flask(__name__)
 
-conexion = mysql.connector.connect(**config)
+# Conexion base de datos
+try:
+    conexion = mysql.connector.connect(**config)
+    print("¡Conexión establecida!")
+except:
+    print("Error en la conexión a la base de datos...")
+    sys.exit()
+
 
 
 # VER ITEMS
