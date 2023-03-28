@@ -34,7 +34,19 @@ def ver_items():
         return jsonify({"mensaje":"Error"})
 
 
-
+@app.route("/newItem", methods=['POST'])
+def añadirItem():
+    # print(request.json)
+    try:
+        cursor = conexion.cursor()
+        sql = """INSERT INTO `items` (`name`, `sellIn`, `quality`) 
+        VALUES ('{0}', '{1}', '{2}')""".format(request.json['name'],request.json['sellIn'],request.json['quality'])
+        cursor.execute(sql)
+        conexion.commit() #Confirmar acción
+        return jsonify({"mensaje":"Item añadido!"})
+    
+    except Exception as ex:
+        return jsonify({"mensaje":"Error"})   
 
 
 # ERRORES WEB
