@@ -22,12 +22,12 @@ def ver_items():
     try:
         conexion = db_connect()
         cursor = conexion.cursor()
-        sql="SELECT id, name, sellIn, quality FROM items"
+        sql="SELECT id, itemType, name, sellIn, quality FROM items"
         cursor.execute(sql)
         items = cursor.fetchall()
         inventario = []
         for item in items:
-            item_tienda = {'id': item[0], 'name': item[1], 'sellIn': item[2], 'quality': item[3]}
+            item_tienda = {'id': item[0], 'itemType': item[1], 'name': item[2], 'sellIn': item[3], 'quality': item[4]}
             inventario.append(item_tienda)
         return jsonify({'Item': inventario })
     
@@ -42,11 +42,11 @@ def ver_item(id):
     try:
         conexion = db_connect()
         cursor = conexion.cursor()
-        sql="SELECT id, name, sellIn, quality FROM items WHERE id = '{0}'".format(id)
+        sql="SELECT id, itemType, name, sellIn, quality FROM items WHERE id = '{0}'".format(id)
         cursor.execute(sql)
         item=cursor.fetchone()
         if item != None:
-            item_tienda  = {'id': item[0], 'name':item[1], 'sellIn':item[2], 'quality':item[3]}
+            item_tienda  = {'id': item[0], 'itemType': item[1], 'name': item[2], 'sellIn': item[3], 'quality': item[4]}
             return jsonify({'Item': item_tienda })
         else:
             return jsonify({'mensaje': "Item no encontrado!"})
@@ -57,12 +57,12 @@ def ver_item(id):
 
 
 # Añadir Item
-def añadirItem(name, itemType, sellIn, quality):
+def añadirItem(itemType, name, sellIn, quality):
     try:
         conexion = db_connect()
         cursor = conexion.cursor()
-        sql = """INSERT INTO `items` (`name`, `sellIn`, `quality`) 
-        VALUES ('{0}', '{1}', '{2}')""".format(request.json['name'],request.json['sellIn'],request.json['quality'])
+        sql = """INSERT INTO `items` (`itemType`, `name`, `sellIn`, `quality`) 
+        VALUES ('{0}', '{1}', '{2}', '{3}')""".format(request.json['itemType'],request.json['name'],request.json['sellIn'],request.json['quality'])
         cursor.execute(sql)
         conexion.commit() #Confirmar acción
         return jsonify({"mensaje":"Item añadido!"})
