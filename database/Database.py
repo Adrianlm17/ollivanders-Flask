@@ -9,7 +9,6 @@ import sys
 def db_connect():
     try:
         conexion = mysql.connector.connect(**config)
-        print("¡Conexión establecida!")
         return conexion
     
     except:
@@ -25,29 +24,30 @@ def ver_items():
         cursor = conexion.cursor()
         sql="SELECT id, name, sellIn, quality FROM items"
         cursor.execute(sql)
-        items=cursor.fetchall()
+        items = cursor.fetchall()
         inventario = []
         for item in items:
-            item_tienda={'id': item[0], 'name':item[1], 'sellIn':item[2], 'quality':item[3]}
+            item_tienda = {'id': item[0], 'name': item[1], 'sellIn': item[2], 'quality': item[3]}
             inventario.append(item_tienda)
-        return jsonify({'inventario': inventario})
+        return jsonify({'Item': inventario })
     
     except Exception as ex:
+        print(ex)
         return jsonify({"mensaje":"Error"})
     
 
 
 # Visualizar unico Item
-def ver_item(nombre):
+def ver_item(id):
     try:
         conexion = db_connect()
         cursor = conexion.cursor()
-        sql="SELECT id, name, sellIn, quality FROM items WHERE name = '{0}'".format(nombre)
+        sql="SELECT id, name, sellIn, quality FROM items WHERE id = '{0}'".format(id)
         cursor.execute(sql)
-        items=cursor.fetchone()
-        if items != None:
-            item = {'id': item[0], 'name':item[1], 'sellIn':item[2], 'quality':item[3]}
-            return jsonify({'Item': item})
+        item=cursor.fetchone()
+        if item != None:
+            item_tienda  = {'id': item[0], 'name':item[1], 'sellIn':item[2], 'quality':item[3]}
+            return jsonify({'Item': item_tienda })
         else:
             return jsonify({'mensaje': "Item no encontrado!"})
     
@@ -57,7 +57,7 @@ def ver_item(nombre):
 
 
 # Añadir Item
-def añadirItem():
+def añadirItem(name, itemType, sellIn, quality):
     try:
         conexion = db_connect()
         cursor = conexion.cursor()
@@ -77,6 +77,7 @@ def eliminarItem(id):
         conexion = db_connect()
         cursor = conexion.cursor()
         sql="DELETE FROM items WHERE id = '{0}'".format(id)
+        cursor.execute(sql)
         conexion.commit() #Confirmar acción
         return jsonify({'mensaje': "Item eliminado!"})
     
@@ -86,7 +87,7 @@ def eliminarItem(id):
 
 
 # Update Item
-def updateItem(id):
+def updateItem(id, sellIn, quality):
     try:
         conexion = db_connect()
         cursor = conexion.cursor()
