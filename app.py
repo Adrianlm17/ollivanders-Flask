@@ -44,14 +44,14 @@ def crear():
 
     tipoItem = ["NormalItem", "AgedBrie", "Conjured", "Sulfuras", "Backstage"]
 
-    name = request.json.get("name")
     itemType = request.json.get("itemType")
+    name = request.json.get("name")
     sellIn = request.json.get("sellIn")
     quality = request.json.get("quality")
 
     if itemType in tipoItem:
 
-        DataBase.añadirItem(name, itemType, sellIn, quality)
+        DataBase.añadirItem(itemType, name, sellIn, quality)
         print("Item añadido!")
         return inventario()
     
