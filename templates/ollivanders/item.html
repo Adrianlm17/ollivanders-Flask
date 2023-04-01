@@ -4,11 +4,43 @@
 
 {% block body %}
 
-    <div class="items">
-        <div class="lista-items">
-            <h1>Item Ollivanders</h1>
+    <h1>Item Ollivanders</h1>
 
-        </div>
-    </div>
+    <form method="POST" action="/item">
+		<label for="id">Escribe el ID del Item:</label>
+		<input type="text" id="id" name="id">
+		<input type="submit" value="Buscar">
+	</form>
+
+	{% if producto %}
+		<h2>Item {{ producto[0] }}</h2>
+		<table>
+			<tr>
+				<th>ID</th>
+                <th>Tipo</th>
+				<th>Nombre</th>
+				<th>Sell In</th>
+				<th>Quality</th>
+			</tr>
+			<tr>
+                <td>{{ producto[0] }}</td>
+                <td>{{ producto[1] }}</td>
+                <td>{{ producto[2] }}</td>
+                <td>{{ producto[3] }}</td>
+                <td>{{ producto[4] }}</td>
+			</tr>
+		</table>
+
+		<br><br><br>
+
+		<form method="POST" action="/eliminar/{{ producto[0] }}" style="display: inline;">
+        <input type="submit" value="Eliminar Item">
+    </form>
+
+	<form action="/" style="display: inline;">
+		<input type="submit" value="Inicio">
+	</form>
+		
+	{% endif %}
 
 {% endblock %}

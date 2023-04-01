@@ -4,11 +4,52 @@
 
 {% block body %}
 
-    <div class="items">
-        <div class="lista-items">
-            <h1>Items Ollivanders</h1>
+    <h1>Items Ollivanders</h1>
+    
+    <table>
+        <thead>
+            <tr>
+            <th>ID</th>
+            <th>Item Type</th>
+            <th>Nombre</th>
+            <th>Sell In</th>
+            <th>Quality</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+            <td>{{ item[0] }}</td>
+            <td>{{ item[1] }}</td>
+            <td>{{ item[2] }}</td>
+            <td>{{ item[3] }}</td>
+            <td>{{ item[4] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <br><br><br>
 
-        </div>
+    <div>
+        <button id="actualizar-btn">Actualizar</button>
+        <script>
+            $(document).ready(function() {
+                $("#actualizar-btn").click(function() {
+                    $.ajax({
+                        type: "PUT",
+                        url: "/actualizar",
+                        success: function(response) {
+                            // Si la petición fue exitosa, actualiza la tabla de items
+                            location.reload();
+                        }
+                    });
+                });
+            });
+        </script>
+        
+        <a href="/crear"><button>Crear Item</button></a>
+        <a href="/item"><button>Ver Item</button></a>
     </div>
 
 {% endblock %}

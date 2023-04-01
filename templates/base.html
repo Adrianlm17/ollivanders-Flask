@@ -6,15 +6,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %} {% endblock %}</title>
 
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/ollivanders_icono.ico') }}">
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        
     </head>
     <body>
-        {% block body %}
+        
+        <div class="contenedor_base">
+            {% block body %}
 
-        {% endblock %}
+            {% endblock %}
+        </div>
+
     </body>
 </html>

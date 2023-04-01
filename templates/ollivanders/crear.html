@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %} Crear Item Ollivanders {% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h1>Crear Item</h1>
+        <form method="POST" action="/crear">
+            
+            <label for="itemType">Tipo</label>
+            <br>
+            <input type="text" id="itemType" name="itemType" required>
+            <br><br>
+
+            <label for="name">Nombre</label>
+            <br>
+            <input type="text" id="name" name="name" required>
+            <br><br>
+
+            <label for="sellIn">Sell In</label>
+            <br>
+            <input type="number" id="sellIn" name="sellIn" required>
+            <br><br>
+
+            <label for="quality">Quality</label>
+            <br>
+            <input type="number" id="quality" name="quality" required>
+            <br><br>
+
+            <button type="submit" class="button">Crear</button>
+        </form>
+    </div>
+
+{% endblock %}
+
