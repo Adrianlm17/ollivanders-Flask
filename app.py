@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from database import DataBase
+from domain.GildedRose import *
 
 app = Flask(__name__)
 
@@ -19,77 +20,106 @@ def index():
 
 
 
-# Ver Inventario
-@app.route("/inventario", methods=["GET"])
-def inventario():
-    registro = DataBase.ver_items()
 
-    return render_template("ollivanders/items.html", registro = registro)
+# Ver Inventario
+@app.route("/items", methods=["GET"])
+def inventario():
+    
+    items = DataBase.ver_items()
+
+    return render_template("ollivanders/items.html", items = items)
+
 
 
 
 # Ver Item
-@app.route("/inventario/<id>", methods=["GET"])
-def item(id):
+@app.route("/item", methods=["GET", "POST"])
+def item():
     
-    producto = DataBase.ver_item(id)
+    if request.method == "POST":
+        item_id = request.form.get("id")
+        producto = DataBase.ver_item(item_id)
     
-    return render_template("ollivanders/item.html",  producto = producto)
-
-
-
-# Añadir Item
-@app.route("/inventario/crear", methods=["POST"])
-def crear():
-
-    tipoItem = ["NormalItem", "AgedBrie", "Conjured", "Sulfuras", "Backstage"]
-
-    itemType = request.json.get("itemType")
-    name = request.json.get("name")
-    sellIn = request.json.get("sellIn")
-    quality = request.json.get("quality")
-
-    if itemType in tipoItem:
-
-        DataBase.añadirItem(itemType, name, sellIn, quality)
-        print("Item añadido!")
-        return inventario()
+        if producto:
+            return render_template("ollivanders/item.html",  producto = producto)
+        
+        else:
+            return render_template("ollivanders/errors/idNotFound.html")
     
     else:
-        return render_template("ollivanders/errors/errorCreación.html")
+        return render_template("ollivanders/item.html")
+
+
+
+
+# Crear Item
+@app.route("/crear", methods=["GET", "POST"])
+def crear():
+
+    if request.method == "POST":
+
+        tipoItem = ["NormalItem", "AgedBrie", "Conjured", "Sulfuras", "Backstage"]
+
+        itemType = request.form.get("itemType")
+        name = request.form.get("name")
+        sellIn = request.form.get("sellIn")
+        quality = request.form.get("quality")
+
+        if itemType in tipoItem:
+
+            DataBase.añadirItem(itemType, name, sellIn, quality)
+            print("Item añadido!")
+            return inventario()
+        
+        else:
+            return render_template("ollivanders/errors/tipoErroneo.html")
+    
+    else:
+        return render_template("ollivanders/crear.html")
+
 
 
 # Eliminar Item
-@app.route("/inventario/eliminar", methods=["DELETE"])
-def eliminar():
+@app.route("/eliminar/<int:id>", methods=["POST"])
+def eliminar(id):
     
-    id = request.json.get("id")
     registro = DataBase.ver_item(id)
 
     if registro is not None:
         DataBase.eliminarItem(id)
         return inventario()
     
-    else:
-        return render_template("ollivanders/errors/idNotFound.html")
+    return render_template("ollivanders/idNotFound.html")
 
 
 
-# Actualizar Item
-@app.route("/inventario/<id>", methods=["PUT"])
-def actualizar(id):
-
-    registro = DataBase.ver_item(id)
-
-    if id in registro:
-        sellIn = request.json.get("sellIn")
-        quality = request.json.get("quality")
-        DataBase.updateItem(id, sellIn, quality)
-        return inventario()
+# Actualizar Items
+@app.route("/actualizar", methods=["PUT"])
+def actualizar():
+    items = DataBase.ver_items()
     
-    else:
-        return render_template("ollivanders/errors/idNotFound.html")
+    for item in items:
+        itemType = item[1]
+        itemName = item[2]
+        itemSellIn = item[3]
+        itemQuality = item[4]
+        
+        if itemType == "AgedBrie":
+            item_obj = AgedBrie(itemName, itemSellIn, itemQuality)
+        elif itemType == "Backstage":
+            item_obj = BackstagePasses(itemName, itemSellIn, itemQuality)
+        elif itemType == "Conjured":
+            item_obj = Conjured(itemName, itemSellIn, itemQuality)
+        elif itemType == "Sulfuras":
+            item_obj = Sulfuras(itemName, itemSellIn, itemQuality)
+        else:
+            item_obj = NormalItem(itemName, itemSellIn, itemQuality)
+        
+        item_obj.updateQuality()
+        DataBase.updateItem(item[0], item_obj.sellIn, item_obj.quality)
     
+    return inventario()
+
 
 
 # ERRORES WEB
@@ -109,4 +139,4 @@ def metodo_no_permitido(error):
 
 if __name__ == "__main__":
 
-    app.run()
+    app.run(debug=True)
