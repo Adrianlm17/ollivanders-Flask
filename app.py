@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from database import DataBase
+from database.Database import *
 from domain.GildedRose import *
 
 app = Flask(__name__)
@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 
 # Prueba Conexion Base de datos
-DataBase.db_connect()
+db_connect()
 print("Conexion establecida con la base de datos!")
 
 
@@ -25,7 +25,7 @@ def index():
 @app.route("/items", methods=["GET"])
 def inventario():
     
-    items = DataBase.ver_items()
+    items = ver_items()
 
     return render_template("ollivanders/items.html", items = items)
 
@@ -38,7 +38,7 @@ def item():
     
     if request.method == "POST":
         item_id = request.form.get("id")
-        producto = DataBase.ver_item(item_id)
+        producto = ver_item(item_id)
     
         if producto:
             return render_template("ollivanders/item.html",  producto = producto)
@@ -67,7 +67,7 @@ def crear():
 
         if itemType in tipoItem:
 
-            DataBase.añadirItem(itemType, name, sellIn, quality)
+            añadirItem(itemType, name, sellIn, quality)
             print("Item añadido!")
             return inventario()
         
@@ -83,10 +83,10 @@ def crear():
 @app.route("/eliminar/<int:id>", methods=["POST"])
 def eliminar(id):
     
-    registro = DataBase.ver_item(id)
+    registro = ver_item(id)
 
     if registro is not None:
-        DataBase.eliminarItem(id)
+        eliminarItem(id)
         return inventario()
     
     return render_template("ollivanders/idNotFound.html")
@@ -96,7 +96,7 @@ def eliminar(id):
 # Actualizar Items
 @app.route("/actualizar", methods=["PUT"])
 def actualizar():
-    items = DataBase.ver_items()
+    items = ver_items()
     
     for item in items:
         itemType = item[1]
@@ -116,7 +116,7 @@ def actualizar():
             item_obj = NormalItem(itemName, itemSellIn, itemQuality)
         
         item_obj.updateQuality()
-        DataBase.updateItem(item[0], item_obj.sellIn, item_obj.quality)
+        updateItem(item[0], item_obj.sellIn, item_obj.quality)
     
     return inventario()
 
