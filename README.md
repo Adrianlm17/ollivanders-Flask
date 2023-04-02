@@ -10,6 +10,19 @@
     - [**Lógica**](#lógica)
     - [**Base de datos**](#base-de-datos)
     - [**App web**](#app-web)
+- [**Requisitos**](#requisitos)
+    - [**Docker**](#docker)
+    - [**MySQL**](#mysql)
+    - [**Opcional**](#opcional)
+        - [**HeidiSQL**](#heidisql)
+        - [**Xampp**](#xampp)
+- [**Instalación**](#instalación)
+    - [**Entorno**](#entorno)
+    - [**Base de Datos**](#base-de-datos-1)
+    - [**Docker**](#docker-1)
+- [**Uso**](#uso)
+- [**Testing**](#testing)
+    - [**Pytest**](#pytest)
 
 
 
@@ -80,3 +93,128 @@ Esto supone tres capas en tu aplicación.
 4. Base de datos: reutiliza tus conocimientos de Mongo Atlas del primer trimestre, o aprovecha para implementar una base de datos relacional con MySQL.
 
 5. Pensando en introducir un flujo de trabajo de Integración Continua y Entrega Continua (CI /CD) prepararás un contenedor [Docker](https://www.docker.com/) de desarrollo y pruebas y otro contenedor docker para despliegue. De momento, con Python es suficiente [tox](https://tox.wiki/en/latest/).
+
+
+
+
+# Requisitos
+
+Para poder ejecutar la aplicación correctamente, es necesario tener instalado las siguientes herramientas/aplicaciones:
+
+
+## [Docker](https://www.docker.com/products/docker-desktop/)
+
+Necesitaremos tener Docker instalado y en funcionamiento, dado que será donde tengamos nuestro contenedor ejecutando la aplicación.
+
+## [MySQL](https://www.mysql.com/downloads/)
+
+Para este proyecto utilizó la base de datos de MySQL, por lo tanto, para poder usar la base de datos es necesario tener instalado y configurado MySQL.
+
+## Opcional
+
+También para poder visualizar mejor el proyecto utilizo HeidiSQL y Xampp dado que me permiten interactuar mejor con la base de datos.
+
+### [HeidiSQL](https://www.heidisql.com/download.php)
+
+### [Xampp](https://www.apachefriends.org/es/download.html)
+
+
+
+# Instalación
+
+Una vez tengas instalado y configurado todos los requisitos, tendremos que seguir estos pasos para poder hacer uso de nuestra aplicación:
+
+
+## Entorno
+
+Primero de todo tenemos que tener nuestro entorno preparado con sus respectivas carpetas y archivos, para ello tendremos que hacer lo siguiente:
+
+1. Crear un directorio/carpeta
+```
+mkdir .\ollivanders_shop
+cd ollivanders_shop
+```
+
+2. Clonar repositorio
+```
+git clone https://github.com/Adrianlm17/ollivanders-Flask.git
+```
+
+3. Entorno virtual
+```
+python -m venv venv
+```
+
+4. Activar entorno
+```
+.\venv\Scripts\activate
+```
+
+5. Instalar Requirements.txt
+```
+pip install -r requirements.txt
+```
+
+
+## Base de Datos
+
+1. Una vez tenemos el entorno preparado vamos a preparar nuestra base de datos, para ello haremos uso de MySQL (o HeidiSQL), nos tendremos que registrar y acceder a una consulta.
+
+2. Una vez tenemos la consulta preparada, ejecutaremos el script que se proporciona [**"ollivanders-database.sql"**](./database/ollivanders-database.sql) y lo ejecutaremos.
+
+
+
+## Docker
+
+Por ultimo pero no menos importante, es necesario tener un contenedor donde se ecjutara nuestra aplicación, en este repositorio se proporciona un archivo llamado **"Dockerfile"** que nos permitira crear una imagen de Docker y posteriormente crear el contenedor necesario.
+
+1. Imagen Docker
+```
+docker build -t ollivanders-shop .
+```
+
+![Imagen_Docker](./doc/docker_imagen.png)
+
+
+2. Contenedor Docker
+```
+docker run --name=ollivanders_shop -p 5000:5000 -d ollivanders-shop:latest
+```
+
+
+
+# Uso
+
+Para poder hacer uso de nuestra aplicación, tendremos que seguir los siguientes pasos:
+
+1. Asegurate de estar en lar tura adecuada:
+```
+.\ollivanders-Flask>
+```
+
+2. Ejecuta el comando de arrancado:
+```
+flask --debug run
+```
+
+![flask_run](./doc/flask_run.png)
+
+3. Si nos dirigimos a la ruta que nos indica en consola (http://127.0.0.1:5000), nos mostrara nuestra aplicación creada!
+
+![app_ollivanders](./doc/ollivanders_web.png)
+
+
+
+# Testing
+
+## Pytest
+
+Pytest es una biblioteca de pruebas de Python que se utiliza para escribir y ejecutar pruebas unitarias y de integración de forma eficiente.
+Para poder hacer uso de dicha biblioteca, ejecuta el siguiente comando:
+
+```
+pytest
+```
+
+![Pytest](./doc/pytest.png)
+
