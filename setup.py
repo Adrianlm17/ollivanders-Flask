@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="ollivanders",
-    version="0.1",
+    version="1.0",
     author="Adrianlm17",
     author_email="adrianlomu2004@gmail.com",
     description="Proyecto FLASK",
