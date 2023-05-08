@@ -218,3 +218,41 @@ pytest
 
 ![Pytest](./doc/pytest.png)
 
+
+## Coverage
+
+Coverage es una herramienta para medir la cobertura de código de los programas Python. Monitoriza tu programa, anotando qué partes del código han sido ejecutadas, y luego analiza el código fuente para identificar el código que podría haber sido ejecutado pero no lo fue. La medición de la cobertura se utiliza normalmente para medir la eficacia de las pruebas.
+
+Para poder ejecutar Coverage, escribe los siguientes comandos:
+
+```
+coverage run --source ./ -m pytest
+coverage report
+```
+
+![Coverage](./doc/coverage.png)
+
+## Black
+
+Black es una herramienta de formateo de código en Python sin concesiones. Al usarlo, aceptas ceder el control sobre las minucias del formateo manual. A cambio, Black te da velocidad, determinismo y libertad de pycodestyle fastidiándote con el formateo. Ahorrará tiempo y energía mental para asuntos más importantes.
+
+Para poder hacer uso de dicha herramienta, ejecuta el siguiente comando:
+
+```
+black .
+```
+
+![Black](./doc/black.png)
+
+
+## Bandit
+
+Bandit es una herramienta de análisis de seguridad para Python que se utiliza para identificar posibles vulnerabilidades en el código fuente. Bandit realiza un análisis estático del código Python para buscar vulnerabilidades conocidas, como la inyección de SQL, la ejecución de comandos en el sistema, el uso de funciones peligrosas de pickle, entre otras.
+
+Para poder visualizar el resultado de Bandit, ejecuta el siguiente comando en terminal:
+
+```
+bandit app.py
+```
+
+![Bandit](./doc/bandit.png)

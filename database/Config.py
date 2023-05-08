@@ -1,8 +1,7 @@
-
 # Datos conexion BASE DE DATOS
 config = {
-    'user': 'root',
-    'password': '',
-    'host': 'localhost',
-    'database': 'ollivanders_flask'
+    "user": "root",
+    "password": "",
+    "host": "localhost",
+    "database": "ollivanders_flask",
 }
