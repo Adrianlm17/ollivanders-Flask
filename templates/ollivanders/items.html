@@ -48,6 +48,22 @@
             });
         </script>
         
+        <button id="eliminar-btn">Eliminar Datos</button>
+        <script>
+            $(document).ready(function() {
+                $("#eliminar-btn").click(function() {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "/eliminar_datos",
+                        success: function(response) {
+                            // Si la petición fue exitosa, elimina los datos de la tabla
+                            location.reload();
+                        }
+                    });
+                });
+            });
+        </script>
+
         <a href="/crear"><button>Crear Item</button></a>
         <a href="/item"><button>Ver Item</button></a>
     </div>
