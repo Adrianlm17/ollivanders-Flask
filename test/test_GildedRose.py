@@ -171,12 +171,12 @@ def test_Conjured(gilded_rose):
 def test_Conjured_dos(gilded_rose):
     assert str(gilded_rose.items[0]) == "+5 Dexterity Vest, 10, 20"
     gilded_rose.updateGildedRose()
-    assert str(gilded_rose.items[0]) == "+5 Dexterity Vest, 9, 18"
+    assert str(gilded_rose.items[0]) == "+5 Dexterity Vest, 9, 19"
     gilded_rose.updateGildedRose()
-    assert str(gilded_rose.items[0]) == "+5 Dexterity Vest, 8, 16"
+    assert str(gilded_rose.items[0]) == "+5 Dexterity Vest, 8, 18"
     gilded_rose.updateGildedRose()
-    assert str(gilded_rose.items[0]) == "+5 Dexterity Vest, 7, 14"
+    assert str(gilded_rose.items[0]) == "+5 Dexterity Vest, 7, 17"
     gilded_rose.updateGildedRose()
-    assert str(gilded_rose.items[0]) == "+5 Dexterity Vest, 6, 12"
+    assert str(gilded_rose.items[0]) == "+5 Dexterity Vest, 6, 16"
     gilded_rose.updateGildedRose()
-    assert str(gilded_rose.items[0]) == "+5 Dexterity Vest, 5, 10"
+    assert str(gilded_rose.items[0]) == "+5 Dexterity Vest, 5, 15"

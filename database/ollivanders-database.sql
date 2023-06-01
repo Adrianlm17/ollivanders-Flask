@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `items` (
 
 DELETE FROM `items`;
 INSERT INTO `items` (`itemType`,`name`, `sellIn`, `quality`) VALUES
-	('Conjured', '+5 Dexterity Vest', 10, 20),
+	('NormalItem', '+5 Dexterity Vest', 10, 20),
 	('AgedBrie', 'Aged Brie', 2, 0),
 	('NormalItem', 'Elixir of the Mongoose', 5, 7),
 	('Sulfuras', 'Sulfuras, Hand of Ragnaros', 0, 80),
